@@ -4,7 +4,6 @@ import (
 	"archive/zip"
 	"crypto/sha1"
 	"encoding/hex"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -43,8 +42,7 @@ func generateResourcePack(resourcePath string) string {
 			_ = file.Close()
 		}(file)
 
-		fmt.Println("p", strings.Replace(path, filepath.Clean(resourcePath)+"/", "", 1))
-		f, err := w.Create(path)
+		f, err := w.Create(strings.Replace(path, filepath.Clean(resourcePath)+"/", "", 1))
 		if err != nil {
 			return err
 		}
