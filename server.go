@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path"
@@ -8,16 +9,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func regenerate(resourcePath string) (string, string) {
+	fmt.Println("Regenerating...")
+	fileHash := generateResourcePack(resourcePath)
+	filePath := path.Join("cache", fileHash+".zip")
+	fmt.Println("Regenerated!")
+	return fileHash, filePath
+}
+
 func main() {
 	var fileHash, filePath string
 	resourcePath := os.Args[1]
 
-	fileHash = generateResourcePack(resourcePath)
-	filePath = path.Join("cache", fileHash+".zip")
+	fileHash, filePath = regenerate(resourcePath)
 
 	go watch(resourcePath, func() {
-		fileHash = generateResourcePack(resourcePath)
-		filePath = path.Join("cache", fileHash+".zip")
+		fmt.Println("Changes detected!")
+		fileHash, filePath = regenerate(resourcePath)
 	})
 
 	gin.SetMode(gin.ReleaseMode)
