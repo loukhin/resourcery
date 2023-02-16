@@ -20,4 +20,4 @@ COPY --from=builder --chmod=0755 /opt/dynamicresource/dynamic-resource /usr/loca
 EXPOSE 80
 
 ENTRYPOINT ["dumb-init"]
-CMD ["dynamic-resource", "./"]
+CMD ["dynamic-resource", "./resourcepack"]
