@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"path"
 
@@ -31,10 +30,6 @@ func main() {
 
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
-
-	r.GET("/resourcepack/redirect", func(c *gin.Context) {
-		c.Redirect(http.StatusTemporaryRedirect, "/resourcepack?h="+fileHash)
-	})
 
 	r.GET("/resourcepack", func(c *gin.Context) {
 		c.FileAttachment(filePath, path.Base(filePath))
